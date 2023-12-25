@@ -1,0 +1,4 @@
+GET http://localhost:8888/public/index2.html
+Accept: application/json
+
+###

@@ -1,0 +1,25 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	ch := make(chan int)
+
+	go func() {
+		for i := 0; i < 5; i++ {
+			ch <- 5
+			fmt.Println("////////////////////////////////////")
+			time.Sleep(5 * time.Second)
+		}
+	}()
+	for true {
+		for i := range ch {
+			fmt.Println(i)
+		}
+		fmt.Println("??????????????????????????????????????")
+		time.Sleep(3 * time.Second)
+	}
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+</head>
+<body>
+  <form action="http://mydemo.com:8090/post" method="post">
+    <label for="name">姓名：</label>
+    <input type="text" name = "username" id="name">
+    <label for="password">密码：</label>
+    <input type="password" name = "password" id="password"><br>
+      <label for="man">男</label>
+    <input type="radio" name="sex" value="man" id="man">
+      <label for="woman">女</label>
+    <input type="radio" name="sex" value="woman" id="woman"><br>
+    <input type="checkbox" name = "hobbies" value="bike">自行车<br>
+    <input type="checkbox" name = "hobbies" value="friend">朋友<br>
+
+  </form>
+<!--  <input type="submit" value="submit">-->
+  <button>提交</button>
+  <script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        // json序列化表格数据
+        finalRes = $("form").serializeArray().reduce(function(result, item){
+          result[item.name] = item.value;
+          return result;
+        }, {});
+        const myjson =JSON.stringify(finalRes)
+        console.log(myjson)
+        console.log(typeof myjson)
+
+        name = $("#username")
+        pass = $("#password")
+        se = $("#se")
+
+        $.ajax({
+          url:'http://localhost:8080/test',
+          type:'post',
+          data:{
+            username : name
+          },
+          dataType:"JSON",
+          contentType:'application/json;charset=utf-8',
+          success:function (data){
+            console.log(data)
+          },
+          errors:function (data){
+            console.log(data)
+          }
+        })
+
+      });
+    });
+  </script>
+</body>
+</html>

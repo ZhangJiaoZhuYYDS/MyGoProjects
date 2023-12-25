@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<head>
+  <title>登录页面</title>
+</head>
+<body>
+<div class="container">
+  <h1>登录</h1>
+  <form>
+    <label for="username">用户名：</label>
+    <input type="text" id="username" name="username"><br><br>
+    <label for="password">密码：</label>
+    <input type="password" id="password" name="password"><br><br>
+    <label for="mail">请输入您的邮箱获取验证码：</label>
+    <input type="text" id="mail" name="mail"> <h3 id="send" style="cursor: pointer">发送验证码</h3><br><br>
+    <label for="checkword">验证码：</label>
+    <input type="text" id="checkword" name="checkword"><br><br>
+    <button type="submit">登录</button>
+    <button id="register-button" type="button" style="float: right;">没有账号，点击注册</button>
+  </form>
+
+</div>
+<div class="result"></div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+  const registerButton = document.getElementById('register-button');
+  registerButton.addEventListener('click', () => {
+    window.location.href = './register.html';
+  });
+
+  const form = document.querySelector('form');
+  const result = document.querySelector('.result');
+
+  // 获取邮箱，发送验证码请求
+  const mailInput = document.getElementById('mail');
+  const sendButton = document.getElementById('send');
+  sendButton.addEventListener('click', () => {
+    const mail = mailInput.value;
+    axios.post('http://localhost:8080/sendEmailCode', { mail })
+            .then(response => {
+              alert(response.data.msg);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+  });
+
+
+
+  // 点击按钮提交数据
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+    try {
+      const response = await axios.post('http://localhost:8080/login', data);
+      console.log(response)
+      if (response.data.code == 200) {
+        window.location.href = "./toupaio.html"
+      }
+      alert(response.data.msg)
+    } catch (error) {
+      result.textContent = error.response.data.message;
+    }
+  });
+</script>
+</body>
+<style>
+  body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: #666;
+  }
+
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  form {
+    width: 400px;
+    margin: 0 auto;
+    animation: slide-left 0.5s ease-out;
+  }
+
+  @keyframes slide-left {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    animation: fade-in 0.5s ease-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  input[type="text"], input[type="password"], button[type="submit"] {
+    animation: scale-up 0.5s ease-out;
+  }
+
+  @keyframes scale-up {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+</style>
+</html>

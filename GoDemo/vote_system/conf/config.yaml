@@ -1,0 +1,4 @@
+mysql:
+  root: root
+  password: 1234
+  db: db5

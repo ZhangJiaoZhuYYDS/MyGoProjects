@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+</head>
+<body>
+<div style="border: 3px cyan dashed;margin: 0 auto;width: 239px;height: 260px">
+  <h1 style="text-align: center">投票单</h1>
+  <form action="http://localhost:8080/userCheck/post" method="post">
+      <input name="title" value="1">
+      <input name="description" value="给自己喜欢的投一票">
+      <input name="type" value="兴趣爱好类">
+      <hr>
+      性别：<label for="man">男</label>
+    <input type="radio" name="sex" value="man" id="man">
+      <label for="woman">女</label>
+    <input type="radio" name="sex" value="woman" id="woman"><br>
+    爱好：<input type="checkbox" name = "hobbies" value="HTML">HTML<br>
+         <input type="checkbox" name = "hobbies" value="CSS">CSS<br>
+         <input type="checkbox" name = "hobbies" value="JAVA">JAVA<br>
+         <input type="checkbox" name = "hobbies" value="GOLANG">GOLANG<br>
+         <input type="checkbox" name = "hobbies" value="PHP">PHP<br>
+         <input type="submit" value="提交">
+  </form>
+
+    <button>提交</button>
+</div>
+<br>
+ <link href="xxxx">发起投票<link>
+ <a href="/static/votes.html"> 投完票之后方可查看投票结果</a>
+
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            // json序列化表格数据
+            finalRes = $("form").serializeArray().reduce(function(result, item){
+                result[item.name] = item.value;
+                return result;
+            }, {});
+            const myjson =JSON.stringify(finalRes)
+            console.log(myjson)
+            console.log(typeof myjson)
+
+
+            $.ajax({
+                url:'http://localhost:8080/userCheck/post',
+                type:'post',
+                data:myjson,
+                dataType:"JSON",
+                contentType:'application/json;charset=utf-8',
+                success:function (data){
+                    console.log(data)
+                },
+                errors:function (data){
+                    console.log(data)
+                }
+            })
+
+        });
+    });
+</script>
+</body>
+</html>

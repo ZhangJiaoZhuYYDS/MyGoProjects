@@ -1,0 +1,12 @@
+Name: search-api
+Host: 0.0.0.0
+Port: 8889
+# jwt 和user 保持一致
+Auth:
+  AccessSecret: AccessSecret
+  AccessExpire: 3600
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc

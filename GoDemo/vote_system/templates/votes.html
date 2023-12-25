@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>投票应用程序</title>
+  <style>
+    .poll-card {
+      margin-bottom: 20px;
+    }
+    label {
+      margin-left: 10px;
+    }
+  </style>
+  <a href="http://localhost:8080/votes/getVotes">查寻所有投票</a>
+  // HTML code to display the container
+  <div id="container">
+    <script>
+      fetch('http://localhost:8080/votes/getVotes', {
+        credentials: 'include',
+        method: 'GET',
+        headers: {
+
+        },
+        // body: JSON.stringify({
+        //   username: 'example_user',
+        //   password: 'example_password'
+        // })
+      })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                data.forEach(item => {
+                  // create HTML element and populate with item data
+                  const element = document.createElement('div');
+                  element.innerHTML = `
+        <h2>${item.title}</h2>
+        <p>${item.description}</p>
+        <img src="${item.image}" alt="${item.title}">
+      `;
+                  // append element to the DOM
+                  document.querySelector('#container').appendChild(element);
+                });
+              })
+              .catch(error => console.error(error));
+    </script>
+  </div>
+</head>
+<body>
+<script >
+  // 这段代码是一个投票应用程序，它创建了一个包含多个投票卡的页面。每个投票卡都有一个问题和一组选项，用户可以选择其中一个选项。每次用户选择一个选项时，该选项的投票计数器将增加。最后，用户可以查看每个投票卡的投票结果。
+
+  // 假设我们有一个对象数组，每个对象表示一个投票
+  const polls = [
+    {
+      question: "你最喜欢的颜色是什么？",
+      options: ["红色", "蓝色", "绿色"],
+      votes: [0, 0, 0] // 每个索引对应于相同索引处的选项
+    },
+    {
+      question: "你最喜欢的食物是什么？",
+      options: ["披萨", "汉堡包", "玉米饼"],
+      votes: [0, 0, 0]
+    }
+  ];
+
+  // 循环遍历投票数组，并为每个创建一个投票卡
+  for (let i = 0; i < polls.length; i++) {
+    const poll = polls[i];
+
+// 创建投票卡元素
+    const pollCard = document.createElement("div");
+    pollCard.classList.add("poll-card");
+
+// 将投票问题添加到卡片中
+    const question = document.createElement("h2");
+    question.textContent = poll.question;
+    pollCard.appendChild(question);
+
+// 循环遍历投票选项，并为每个创建一个单选按钮
+    for (let j = 0; j < poll.options.length; j++) {
+      const option = poll.options[j];
+
+// 创建单选按钮元素
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `poll-${i}`;
+      radio.value = j;
+
+// 添加事件侦听器，以在单击单选按钮时更新投票的投票数组
+      radio.addEventListener("click", () => {
+        poll.votes[j]++;
+      });
+
+// 为单选按钮创建标签元素
+      const label = document.createElement("label");
+      label.textContent = option;
+
+// 将单选按钮和标签添加到投票卡中
+      pollCard.appendChild(radio);
+      pollCard.appendChild(label);
+    }
+
+// 将投票卡添加到页面中
+    document.body.appendChild(pollCard);
+  }
+</script>
+</body>
+</html>
+

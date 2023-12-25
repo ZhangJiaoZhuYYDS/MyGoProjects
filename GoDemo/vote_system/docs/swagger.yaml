@@ -1,0 +1,227 @@
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: 验证码
+        in: formData
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 跨域用户登录
+      tags:
+      - 跨域用户
+  /logins:
+    post:
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: 验证码
+        in: formData
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - 用户
+  /register:
+    post:
+      parameters:
+      - description: mail
+        in: formData
+        name: mail
+        required: true
+        type: string
+      - description: username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: sex
+        in: formData
+        name: sex
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 用户
+  /sendemailcode:
+    post:
+      parameters:
+      - description: mail
+        in: formData
+        name: mail
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 使用邮箱发送验证码
+      tags:
+      - 公共方法
+  /votes/createVote:
+    post:
+      parameters:
+      - description: 投票的标题:比如：你赞成吃饭吗？
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: 投票的有效期，以小时为单位
+        in: formData
+        name: during
+        required: true
+        type: string
+      - description: 投票的内容：比如：result,hobbies,以空格隔开
+        in: formData
+        name: opt
+        required: true
+        type: string
+      - description: 投票类型，比如：type_1
+        in: formData
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 用户创建投票
+      tags:
+      - 投票
+  /votes/doVote:
+    post:
+      parameters:
+      - description: 是否赞成 0 赞成 1 反对
+        in: formData
+        name: result
+        required: true
+        type: string
+      - description: 你的爱好，可以填：html,css,java,go,c++
+        in: formData
+        name: hobbies
+        type: string
+      - description: 投票类型，比如：赞成反对票
+        in: formData
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 用户投票
+      tags:
+      - 投票
+  /votes/getVotes:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 查询所有种类的投票信息
+      tags:
+      - 投票
+  /votes/getVotesByType:
+    post:
+      parameters:
+      - description: 投票类型，
+        in: formData
+        name: type_1
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 查询某类型投票信息
+      tags:
+      - 投票
+  /votes/getVotesoptByType:
+    post:
+      parameters:
+      - description: 投票类型
+        in: formData
+        name: type_1
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 查询当前用户的投票信息
+      tags:
+      - 投票
+  /votes/logout:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+      summary: 用户退出
+      tags:
+      - 用户
+swagger: "2.0"

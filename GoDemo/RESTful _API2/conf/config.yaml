@@ -1,0 +1,19 @@
+runmode: debug                 # 开发模式, debug, release, test
+addr: :8081                  # HTTP绑定端口
+name: apiserver2              # API Server的名字
+url: http://127.0.0.1:8081   # pingServer函数请求的API服务器的ip:port
+max_ping_count: 10           # pingServer函数try的次数
+log:
+  writers: file,stdout     # 日志输出位置（日志文件/标准输出）
+  logger_level: INFO     # 日志级别 （DEBUG INFO WARN ERROR FATAL ）
+  logger_file: log/apiserver.log    # 日志文件存放路径
+  log_format_text: false # 日志输出格式  false:Json形式  true :非json
+  rollingPolicy: size # rotate依据，可选的有daily和size。如果选daily则根据天进行转存，如果是size则根据大小
+  log_rotate_date: 1    # rotate转存时间，配合rollingPolicy:daily 使用
+  log_rotate_size: 1   # rotate转存大小，配合rollingPolicy:size使用
+  log_backup_count: 7  #  当日志文件达到转存标准时，1og系统会将该日志文件进行压缩备份，这里指定了备份文件的最大个数
+db:
+  name: db_apiserver
+  addr: 127.0.0.1:3306
+  username: root
+  password: 1234

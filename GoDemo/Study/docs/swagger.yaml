@@ -1,0 +1,161 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: 联系人信息
+    url: http://www.swagger.io/support
+  description: 描述信息
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 标题
+  version: "1.0"
+paths:
+  /login:
+    post:
+      description: 用户登录
+      parameters:
+      - description: user username
+        in: formData
+        name: username
+        type: string
+      - description: user password
+        in: formData
+        name: password
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 用户登录
+      tags:
+      - 用户方法
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: 可按社区按分页，关键词或分类标识查询问题列表接口
+      parameters:
+      - description: 请输入当前页，默认第一页
+        in: query
+        name: page
+        type: integer
+      - description: size
+        in: query
+        name: size
+        type: integer
+      - description: status 0待判断 1正确 2 错误 3 超时
+        in: query
+        name: status
+        type: integer
+      - description: user_identity
+        in: query
+        name: user_identity
+        type: string
+      - description: problem_identity
+        in: query
+        name: problem_identity
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 提交记录列表接口
+      tags:
+      - 提交记录相关接口
+  /problem-detail:
+    get:
+      description: 可按社区按时间或分数排序查询帖子列表接口
+      parameters:
+      - description: problem identity
+        in: query
+        name: identity
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      summary: 问题详情
+      tags:
+      - 问题相关接口
+  /register:
+    post:
+      parameters:
+      - description: mail
+        in: formData
+        name: mail
+        required: true
+        type: string
+      - description: code
+        in: formData
+        name: code
+        required: true
+        type: string
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: phone
+        in: formData
+        name: phone
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 公共方法
+  /send-code:
+    post:
+      parameters:
+      - description: email
+        in: formData
+        name: email
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","data":""}'
+          schema:
+            type: string
+      summary: 发送验证码
+      tags:
+      - 公共方法
+  /user-detail:
+    get:
+      description: 查询用户的信息
+      parameters:
+      - description: user identity
+        in: query
+        name: identity
+        type: string
+      responses:
+        "200":
+          description: '{"code":"200","msg":"","data":""}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 用户详情
+      tags:
+      - 用户方法
+swagger: "2.0"
